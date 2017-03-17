@@ -13,6 +13,11 @@
 		02217D161E779BB100B57249 /* CoreDataTestingProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02217D141E779BB100B57249 /* CoreDataTestingProject.xcdatamodeld */; };
 		02217D181E779BB100B57249 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02217D171E779BB100B57249 /* Assets.xcassets */; };
 		02217D1B1E779BB100B57249 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02217D191E779BB100B57249 /* LaunchScreen.storyboard */; };
+		02217D251E77A23600B57249 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02217D231E77A23600B57249 /* UserCell.swift */; };
+		02217D261E77A23600B57249 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02217D241E77A23600B57249 /* UserCell.xib */; };
+		02217D291E77A38000B57249 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02217D281E77A38000B57249 /* SearchController.swift */; };
+		02217D2B1E77A39100B57249 /* AddUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02217D2A1E77A39100B57249 /* AddUserController.swift */; };
+		02217D2E1E77A5AA00B57249 /* ManipulateCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02217D2D1E77A5AA00B57249 /* ManipulateCoreData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		02217D171E779BB100B57249 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02217D1A1E779BB100B57249 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02217D1C1E779BB100B57249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02217D231E77A23600B57249 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		02217D241E77A23600B57249 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		02217D281E77A38000B57249 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		02217D2A1E77A39100B57249 /* AddUserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserController.swift; sourceTree = "<group>"; };
+		02217D2D1E77A5AA00B57249 /* ManipulateCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManipulateCoreData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +66,10 @@
 		02217D0C1E779BB100B57249 /* CoreDataTestingProject */ = {
 			isa = PBXGroup;
 			children = (
+				02217D2C1E77A57300B57249 /* classFunction */,
+				02217D271E77A36300B57249 /* ViewController */,
+				02217D221E77A21C00B57249 /* cell */,
 				02217D0D1E779BB100B57249 /* AppDelegate.swift */,
-				02217D0F1E779BB100B57249 /* ViewController.swift */,
 				02217D111E779BB100B57249 /* Main.storyboard */,
 				02217D171E779BB100B57249 /* Assets.xcassets */,
 				02217D191E779BB100B57249 /* LaunchScreen.storyboard */,
@@ -65,6 +77,33 @@
 				02217D141E779BB100B57249 /* CoreDataTestingProject.xcdatamodeld */,
 			);
 			path = CoreDataTestingProject;
+			sourceTree = "<group>";
+		};
+		02217D221E77A21C00B57249 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				02217D231E77A23600B57249 /* UserCell.swift */,
+				02217D241E77A23600B57249 /* UserCell.xib */,
+			);
+			name = cell;
+			sourceTree = "<group>";
+		};
+		02217D271E77A36300B57249 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				02217D0F1E779BB100B57249 /* ViewController.swift */,
+				02217D281E77A38000B57249 /* SearchController.swift */,
+				02217D2A1E77A39100B57249 /* AddUserController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		02217D2C1E77A57300B57249 /* classFunction */ = {
+			isa = PBXGroup;
+			children = (
+				02217D2D1E77A5AA00B57249 /* ManipulateCoreData.swift */,
+			);
+			name = classFunction;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,6 +166,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02217D261E77A23600B57249 /* UserCell.xib in Resources */,
 				02217D1B1E779BB100B57249 /* LaunchScreen.storyboard in Resources */,
 				02217D181E779BB100B57249 /* Assets.xcassets in Resources */,
 				02217D131E779BB100B57249 /* Main.storyboard in Resources */,
@@ -140,8 +180,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02217D251E77A23600B57249 /* UserCell.swift in Sources */,
+				02217D291E77A38000B57249 /* SearchController.swift in Sources */,
 				02217D101E779BB100B57249 /* ViewController.swift in Sources */,
+				02217D2E1E77A5AA00B57249 /* ManipulateCoreData.swift in Sources */,
 				02217D161E779BB100B57249 /* CoreDataTestingProject.xcdatamodeld in Sources */,
+				02217D2B1E77A39100B57249 /* AddUserController.swift in Sources */,
 				02217D0E1E779BB100B57249 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

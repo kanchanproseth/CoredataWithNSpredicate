@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SearchController.swift
 //  CoreDataTestingProject
 //
 //  Created by Cyberk on 3/14/17.
@@ -9,24 +9,39 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource ,NSFetchedResultsControllerDelegate{
-    
+class SearchController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     var controllers: NSFetchedResultsController<User>!
-
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchbar: UISearchBar!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "usercell")
+
         fetchData()
+        self.hideKeyboardWhenTappedAround()
+        searchbar.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func dismissvc(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+
+}
+
+extension SearchController: NSFetchedResultsControllerDelegate{
     func fetchData(){
         let fetchrequest : NSFetchRequest<User> = User.fetchRequest()
-        let dateSort = NSSortDescriptor(key: "id", ascending: false)
-        fetchrequest.sortDescriptors = [dateSort]
+        let idSort = NSSortDescriptor(key: "id", ascending: false)
+        fetchrequest.sortDescriptors = [idSort]
         
         let resultcontroller = NSFetchedResultsController(fetchRequest: fetchrequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         resultcontroller.delegate = self
@@ -39,11 +54,37 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         }
         
     }
+    
+    func fetchDataWithNspredicate(_ input:String){
+        let request = NSFetchRequest<User>(entityName: "User")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+//        let predicate = NSPredicate(format: "type = %@", usernamePredicateFilter!)
+        let dateSort = NSSortDescriptor(key: "id", ascending: false)
+       
+        request.predicate = NSPredicate(format: "username contains[c] %@", searchbar.text!)
+        request.sortDescriptors = [dateSort]
+        
+        let resultcontroller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        resultcontroller.delegate = self
+        self.controllers = resultcontroller
+        do{
+            try controllers.performFetch()
+        }catch{
+            let error = error as NSError
+            print("\(error)")
+        }
+        print(request)
+        do {
+            let results = try context.fetch(request)
+            print(results)
+        } catch {
+            
+        }
+        tableView.reloadData()
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         if let sections = controllers.sections{
             return sections.count
@@ -65,12 +106,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     func configurecell(cell:UserCell, indexpath: NSIndexPath){
         let accessItem = controllers.object(at: indexpath as IndexPath)
         cell.configureCell(user: accessItem)
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let objs = controllers.fetchedObjects, objs.count > 0{
-            let user = objs[indexPath.row]
-            performSegue(withIdentifier: "adduser", sender: user)
-        }
     }
     
     //Update Data == tableview.reload()---------------------------------------------------------------------------
@@ -110,26 +145,27 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             break
         }
     }
+}
+extension SearchController: UISearchBarDelegate{
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        if let searchtext = searchbar.text{
+//            fetchDataWithNspredicate(searchtext)
+//        }
+//        
+//    }
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SearchController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "adduser" {
-            let dest = segue.destination as! AddUserController
-            if let users = sender as? User{
-                dest.userEdit = users
-            }
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let searchtext = searchbar.text{
+            fetchDataWithNspredicate(searchtext)
         }
     }
-    
-    
-    @IBAction func addUser(_ sender: Any) {
-        performSegue(withIdentifier: "adduser", sender: nil)
-    }
-    
-    @IBAction func searchFilter(_ sender: Any) {
-        performSegue(withIdentifier: "search", sender: nil)
-    }
-
-
 }
+
 
